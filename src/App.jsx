@@ -125,7 +125,7 @@ const REFLECT_INTRO = {
   current:    "Think through these questions as honestly and objectively as you can. The clearer your picture of what is actually happening, the more useful your brief will be.",
   positions:  "Answer these as honestly as you can, including the parts that are hard to put into words. The goal is to understand your own reasoning, not to defend it.",
   priorities: "There are no right answers here, only yours. Use these to sort what you most want to protect from what you can hold more loosely.",
-  discussed:  "A sketch, not a full account. The point is to look ahead at the conversation you expect, not to script it.",
+  discussed:  "Jot down what you can see coming, a few words on each line is plenty. The goal is to look ahead at the conversation you expect, not to script it.",
   questions:  "Separate what you know from what you are assuming. Naming an assumption as an assumption is what makes it easier to set aside when new information arrives.",
 };
 
@@ -321,7 +321,7 @@ function WelcomeScreen() {
   ];
   return (
     <div style={{maxWidth:580}}>
-      <Orientation>Mediation is often the first time many parents sit down to actively work toward a resolution together.</Orientation>
+      <Orientation>Mediation is often the first time many parents sit down to actively work toward a resolution together. It is a chance to shape the long-term arrangement directly, rather than leaving it to be decided for you.</Orientation>
       <P>A lot of parents are not sure what to expect from it, or how to get ready for a conversation that can matter this much. That is not a failure. It is simply where most people arrive.</P>
       <P>This system is designed to help you prepare at your own pace. As you move through each section, the workspace helps you organize your thoughts, keep track of your questions, and gradually build a mediation brief, so the day itself does not have to be the first time you have worked everything through.</P>
       <div style={{fontSize:10,fontWeight:700,letterSpacing:"0.12em",color:AMBER,margin:"28px 0 6px"}}>HOW IT WORKS</div>
@@ -346,17 +346,20 @@ function UnderstandingLearn() {
     <div>
       <div style={{background:NAVY,color:"#fff",padding:"18px 22px",borderRadius:10,marginBottom:24,lineHeight:1.8}}>
         <div style={{fontSize:10,fontWeight:600,letterSpacing:"0.1em",color:AMBER,marginBottom:8}}>PART I — FOUNDATION</div>
-        <div style={{fontSize:13,color:"rgba(255,255,255,0.85)"}}>Before mediation, it helps to get clear on your own situation: what is happening now, why you want what you want, and what matters most. This first part builds that foundation, starting with the process itself.</div>
+        <div style={{fontSize:13,color:"rgba(255,255,255,0.85)"}}>Before mediation, it helps to have a clear view of your own situation: what is happening now, why you want what you want, and what matters most. This first part helps you build that foundation.</div>
       </div>
       <Orientation>Mediation can be hard to picture before you are in it. You may have a date on the calendar and still be unsure who will be there, what the day will ask of you, or what is actually expected. This section helps you get a clearer picture of the process before you walk in.</Orientation>
-      <P>A few questions tend to come up first. What actually happens during mediation? Will I have to sit across from the other parent? Does the mediator decide anything? Do I have to agree to something? Understanding the process can answer most of them.</P>
+      <P>When mediation becomes part of the discussion, a few questions tend to arise. What actually happens in mediation? What gets covered? Do I have to sit in the same room as the other parent? What do I have to agree to? These are the questions this section is here to answer.</P>
 
       <SH>What Mediation Is</SH>
-      <P>Mediation is a structured conversation designed to help parents discuss unresolved issues and explore whether agreements can be reached. Its purpose is narrower than a trial: to find out whether you and the other parent can agree on the matters that remain open.</P>
-      <P>It is a discussion, not a contest. Parents often arrive prepared to prove they are right, and find there is no one there whose role is to decide a winner. What helps instead is clarity about what matters to you and where you have room to work with the other parent. Mediation is an opportunity to explore agreement, not an obligation to reach one, and ending without one, sometimes called an impasse, is a possible outcome, and not necessarily a failure.</P>
+      <P>Mediation is a structured conversation designed to help parents discuss unresolved issues and explore whether agreements can be reached. The purpose of mediation is narrower than that of a trial; it is to find out whether you and the other parent can agree on the matters that remain unresolved.</P>
+      <P>It is a discussion, not a contest. Parents often arrive prepared to prove they are right, and find there is no one there whose role is to decide a winner. What helps instead is clarity about what matters to you and where you have room to work with the other parent. Mediation is an opportunity to explore agreement, not an obligation to reach one. Ending in what is sometimes called an impasse is a possible outcome, and not necessarily a failure.</P>
 
       <SH>What Mediation Is Not</SH>
       <P>Mediation is not court or litigation. There is no trial to decide who is right or wrong, and no judge to rule. It tends to be more successful when the focus shifts from proving a point to solving a problem, and from assigning blame for the past to shaping what happens next.</P>
+      <div style={{borderLeft:`3px solid ${AMBER}`,background:AMBER_LIGHT,borderRadius:"0 8px 8px 0",padding:"12px 16px",margin:"18px 0"}}>
+        <div style={{fontSize:13.5,color:NAVY,lineHeight:1.7}}>Mediation is also confidential by design. What is said or proposed generally cannot be used as evidence in court if you do not reach agreement, which is part of what makes it safe to explore options openly.</div>
+      </div>
 
       <div style={{borderLeft:`3px solid ${AMBER}`,background:AMBER_LIGHT,borderRadius:"0 8px 8px 0",padding:"12px 16px",margin:"18px 0"}}>
         <div style={{fontSize:13.5,color:NAVY,lineHeight:1.7}}>You and the other parent are the decision-makers. No agreement takes effect unless you both agree to it, which gives you real influence over the outcome.</div>
@@ -387,6 +390,7 @@ function UnderstandingLearn() {
 
       <KeyTakeaways items={[
         "Mediation is not court. It is a structured conversation aimed at reaching agreement, not a trial to decide who is right.",
+        "It is generally confidential. In most places, what is said cannot be used in court if you do not reach agreement, which makes it safer to discuss openly.",
         "It can take more than one form, the same room, separate rooms, or by video. It is worth knowing which is yours.",
         "You remain one of the people making the decisions. Nothing takes effect unless you agree to it.",
       ]} />
@@ -397,13 +401,13 @@ function UnderstandingLearn() {
 function CurrentLearn() {
   return (
     <div>
-      <Orientation>Most parents enter mediation focused on what they want to change. That is understandable. By the time mediation happens, the disagreements have often existed for months or years. Before discussing changes, though, it helps to get clear on the situation that exists today.</Orientation>
-      <P>This sounds simple, but it is easy to skip. Parents often arrive ready to debate whether an arrangement is fair or reasonable without first agreeing on what is actually happening. In many cases, they are discussing different versions of the same reality.</P>
-      <P>The goal of this section is not to decide who is right, and not to decide whether the current arrangement should continue. It is simply to describe and gain clarity over the present situation as best you can, before anyone argues about changing it.</P>
+      <Orientation>Most parents enter mediation focused on what they want to change. That is understandable. By the time mediation happens, the disagreements have often existed for months or years. However, before discussing changes, it is important to have a clear view of the situation as it exists today.</Orientation>
+      <P>This sounds simple, but it is an easy step to skip. Parents often arrive ready to debate whether an arrangement is fair or reasonable without first agreeing on what is actually happening. In many cases, they are discussing different versions of the same reality.</P>
+      <P>The goal of this section is not to decide who is right, and not to decide whether the current arrangement should continue. It is simply to describe and gain clarity over the present situation as best you can, before anyone discusses changing it.</P>
 
       <SH>Before You Begin</SH>
       <P>The most useful thing you can bring into mediation is an accurate picture of what is actually happening right now. Try to paint that picture objectively, without deciding whether the arrangement is right or wrong. Whether it has caused frustration, or has simply existed for a long time, is not the question at this stage. The goal is to observe and describe.</P>
-      <P>As you reflect, you may notice yourself slipping into explanation, often signaled by the word "because." If that happens, you have likely shifted from describing what is happening to explaining why. There will be time later to decide what it all means. For now, the picture itself is enough.</P>
+      <P>As you reflect, you may notice yourself slipping into explanation, often signaled by the word "because." If that happens, you have likely shifted from describing what is happening to explaining why. There will be time later to decide what it all means. For now, understanding the situation as it stands is the goal.</P>
 
       <SH>Separating the Pattern From Its Origin</SH>
       <P>In general, arrangements develop over time, and understanding that evolution can provide useful context.</P>
@@ -427,20 +431,20 @@ function PositionsLearn() {
       <P>Mediation has a way of bringing your point of view into contact with other ways of seeing the same situation. Ideas that feel obvious to you may not seem the same to the other parent. A conclusion that has lived comfortably in your own thinking can sound different the moment it is spoken aloud. The aim is not a stronger position. It is fewer moments where you surprise yourself.</P>
 
       <SH>When You Are Asked Why</SH>
-      <P>At some point in mediation, a simple question tends to arrive: why? A mediator asks it not to challenge you, but because understanding your reasoning is how they help. You may be asked why an arrangement is better, why a change matters, or why something that happened means what you think it means. The question is neutral. It is part of understanding.</P>
+      <P>At some point the question of why tends to become prominent. A mediator asks it not to challenge you, but because understanding your reasoning is how they help. You may be asked why an arrangement is better, why a change matters, or why something that happened means what you think it means. The question is neutral. It is part of understanding.</P>
       <P>Even so, it can catch you off guard, because many positions begin as wants, and wants are surprisingly hard to explain. "I want more weekday time" is an honest sentiment, but it leaves the conversation nowhere to go except agreement or disagreement. Underneath the want there is usually a reason, and the reason is what a discussion can actually use. "The current schedule moves the children midweek, and the disruption is landing on school nights" points at something specific, and gives both parents something to work on rather than something to win.</P>
       <P>So it is worth taking the positions that matter most to you, in private, and trying to say plainly why you hold them. Not to defend them, just to hear them. Sometimes the reasons come easily and the position feels even sounder than before. Other times you find that part of what felt like certainty was really familiarity, a conclusion that has been with you so long it stopped needing reasons. Both are useful to know before you are asked.</P>
 
       <SH>When the Other Parent Sees It Differently</SH>
       <P>There is a moment in most mediations when the other parent describes the same situation you just described, and almost nothing about their version matches yours.</P>
       <P>This can be hard to sit with. It can feel like being contradicted about your own life. The instinct is to correct them, to explain why they are wrong, to point out what they left out. However, if you follow that instinct too far, the mediation may become the same argument the two of you have already had many times.</P>
-      <div style={{borderLeft:`3px solid ${AMBER}`,background:AMBER_LIGHT,borderRadius:"0 8px 8px 0",padding:"14px 16px",margin:"18px 0"}}>
-        <div style={{fontSize:10,fontWeight:700,letterSpacing:"0.1em",color:AMBER,marginBottom:6}}>WHEN THE FEELING RISES</div>
-        <div style={{fontSize:13,color:NAVY,lineHeight:1.75}}>This is one of the most common places a mediation comes apart, not over the disagreement itself, but over how the moment is handled. When the other parent's version lands and you feel the urge to set the record straight rising, you do not have to answer right away. You can pause, take a breath, or ask for a break. Listening to their account is not the same as agreeing with it, and coming back to what matters most to you is what turns a reaction into a response.</div>
-      </div>
       <P>Preparing for this moment is not about rehearsing a rebuttal. It is about understanding the disagreement well enough that you are not meeting it for the first time in the room. Try, honestly, to state the other parent's view the way they would state it. Not the version that is easiest to dismiss, but the one they would recognize as their own. You are not agreeing they are right. You are making sure you understand what you actually disagree about.</P>
+      <div style={{borderLeft:`3px solid ${AMBER}`,background:AMBER_LIGHT,borderRadius:"0 8px 8px 0",padding:"14px 16px",margin:"18px 0"}}>
+        <div style={{fontSize:10,fontWeight:700,letterSpacing:"0.1em",color:AMBER,marginBottom:6}}>GIVE YOURSELF PERMISSION</div>
+        <div style={{fontSize:13,color:NAVY,lineHeight:1.75}}>Mediation may be one of the first times the weight of the situation becomes fully real, for you or for the other parent. Temporary orders and informal arrangements are coming to an end, and the reality of a long-term agreement taking their place can feel overwhelming. If a moment lands hard, you do not have to push through it. Taking a few minutes to regroup is a normal and accepted part of mediation.</div>
+      </div>
       <P>It helps to know that many disagreements arrive carrying two things at once: a frustration about the past and a concern about the future. "He was late to every exchange last year" is a frustration. It explains why the issue matters to you, and it is often completely fair. But underneath it is usually a concern that can actually be solved: the exchanges need a set time and a plan for when someone is running behind. The frustration tells you why it matters. Mediation can acknowledge the frustration, but it tends to be more useful when the discussion turns to the concern underneath it.</P>
-      <P>There is one more reason these disagreements can be harder to untangle than they first appear. Almost every parent walks into mediation believing they are acting in their child's best interest, and the other parent usually believes exactly the same. Most of the time, both are sincere. The difficulty is that a child's interest is surprisingly easy to blend with your own without noticing, until "what is best for the child" has quietly become "what is best for the child, as I understand it." This is not something careless parents do. It may be one of the most common habits of loving parents. Noticing the possibility does not ask you to change your position. It only helps you see it clearly, before someone else sees it differently.</P>
+      <P>There is one more reason these disagreements can be harder to untangle than they first appear. Most parents walk into mediation with a firm, sincere belief that they are acting in their child's best interest. The other parent usually walks in with the very same belief. The difficulty is that a child's interest is surprisingly easy to blend with your own without noticing, until "what is best for the child" has quietly become "what is best for the child, as I understand it." This is understandable, and not something careless parents do. It may be one of the most common habits of loving parents. Noticing the possibility does not ask you to change your position. It only helps you see it clearly, before someone else sees it differently.</P>
 
       <KeyTakeaways items={[
         "Underneath a want there is usually a reason. The reason is what a discussion can actually use.",
@@ -459,9 +463,9 @@ function PrioritiesLearn() {
       <P>This section is about sorting that out ahead of time, while you are calm, so that you walk in knowing the difference between what matters most to you and what you can hold more loosely. That difference is hard to find in the mediation room, with the other parent across from you and the pressure on. It is much easier to find beforehand.</P>
       <P>This is not about lowering your standards or becoming more agreeable. It is about understanding your priorities clearly enough that you can hold the important things firmly and let the smaller things be smaller.</P>
 
-      <SH>What Matters Most Is Usually Short</SH>
+      <SH>What Matters Most</SH>
       <P>When parents first list what they care about, the list is long. Almost everything makes it on. That is normal, and it is the wrong place to stop, because a list where everything matters is the same as a list where nothing does. It gives you no way to choose when you have to.</P>
-      <P>The useful work is narrowing. Of everything on that long list, which few things are the ones you would protect even if it meant moving on others? Most parents eventually find the truly essential list is shorter than they expected. The rest matters, but it matters differently, and knowing that in advance is what lets you spend your attention where it counts.</P>
+      <P>The useful work is narrowing the list down. Of everything on that long list, which few things are the ones you would protect even if it meant moving on others? Most parents eventually find the truly essential list is shorter than they expected. The rest matters, but it matters differently, and knowing that in advance is what lets you spend your attention where it counts.</P>
       <P>It also helps to separate two things that often look alike: what you are attached to, and what you are actually trying to protect. A parent may feel strongly about one particular schedule while what they care about underneath is a consistent routine. Another may be set on a specific holiday arrangement while what matters most is real time with extended family. The preference and the priority can overlap, but they are not always the same, and seeing the priority underneath the preference is often where new options appear.</P>
       <P>One more thing worth checking as you narrow the list: is each item essential because of what it does for your child, or because of how it would feel to lose it? Both are real, but they behave differently under pressure. The first tends to remain important. The second can sometimes loosen once you see it clearly.</P>
 
@@ -469,16 +473,15 @@ function PrioritiesLearn() {
       <P>Flexibility has a bad reputation in a setting like this. It can sound like weakness, like being the parent who folds. It is worth separating the two, because they are not the same thing at all.</P>
       <P>Giving in is conceding something that matters because the pressure got to be too much. Flexibility is knowing, ahead of time, which things you do not actually need to hold, so that you can let them go easily and without regret. The first happens to you. The second is something you decide. A parent who has done this work is not weaker in the room. They are harder to wear down, because they are not spending themselves defending things they were always willing to move on.</P>
       <P>There is a second kind of flexibility, too, and it is the more useful one. Often, more than one arrangement can satisfy the same underlying priority. A parent who values consistency may find several schedules capable of providing it. A parent who values staying involved in a child's education may find more than one way to stay informed. The priority does not change; only the path to it does. When you know what you are actually trying to protect, it becomes easier to recognize a solution that protects it in a form you had not pictured.</P>
-      <P>This is also what makes agreement possible at all. Mediation tends to move when each parent can offer something that costs them little and matters to the other. Knowing your own flexible areas in advance means you can recognize those moments when they come, rather than meeting every proposal as a threat.</P>
+      <P>This kind of flexibility is also what makes agreement possible. Mediation tends to move when each parent can offer something that costs them little and matters to the other. Knowing your own flexible areas in advance means you can recognize those moments when they come, rather than meeting every proposal as a threat.</P>
 
-      <SH>Telling a Real Conflict From an Unfamiliar One</SH>
-      <P>At some point a proposal may land that sounds reasonable at first and uncomfortable a moment later. Sometimes that discomfort is a genuine conflict with something important to you. Other times it is just the discomfort of an unfamiliar approach to a problem you had only ever pictured solving one way.</P>
-      <P>The difference is not always obvious in the moment, which is exactly why it helps to have thought about your priorities beforehand. It lets you differentiate "this does not protect what matters to me" from "this is not how I imagined it." Both reactions are real. They are simply not the same, and only one of them is a potential reason to hold the line.</P>
+      <SH>Discomfort Is Not Always Disagreement</SH>
+      <P>At some point a proposal may land that sounds reasonable at first and uncomfortable a moment later. Sometimes that discomfort is a genuine conflict with something important to you. Other times it is just the discomfort of an unfamiliar approach to a problem you had only ever pictured solving one way. The difference is not always obvious in the moment, which is exactly why it helps to have thought about your priorities beforehand. It lets you differentiate "this does not protect what matters to me" from "this is not how I imagined it." Both reactions are real, but they are not the same, and only one of them is a potential reason to hold the line.</P>
 
       <KeyTakeaways items={[
-        "A list where everything matters is the same as a list where nothing does. The useful work is narrowing.",
+        "A list where everything matters is the same as a list where nothing does. The useful work is narrowing the list down.",
         "Separate the preference from the priority. Seeing what you are actually trying to protect is where new options appear.",
-        "Flexibility is deciding in advance what you do not need to hold. It makes you harder to wear down, not weaker.",
+        "Flexibility is deciding in advance what you do not need to hold onto. It makes you harder to wear down, not weaker.",
         "More than one arrangement can protect the same priority. That is what makes agreement possible.",
       ]} />
     </div>
@@ -493,12 +496,12 @@ function DiscussedLearn() {
         <div style={{fontSize:10,fontWeight:600,letterSpacing:"0.1em",color:AMBER,marginBottom:8}}>PART II — MAPPING THE CONVERSATION</div>
         <div style={{fontSize:13,color:"rgba(255,255,255,0.85)"}}>So far, the looking you have done has been about your own situation: what is happening, why you want what you want, and what matters most. This part turns the same attention toward the conversation itself. Most parents prepare for mediation by thinking about what they want to say. Fewer stop to consider what is likely to happen once the conversation begins. The point here is to look closely enough at the conversation you are walking into that less of it arrives as a surprise.</div>
       </div>
-      <Orientation>Mediation has a way of not staying where it starts. A disagreement that looks like it is about the schedule can turn out to be about transportation. Something that sounds like a communication problem can turn out to be about who makes decisions. Sometimes one issue stays one issue. Sometimes it opens into several, and sometimes several collapse into one thing underneath them all.</Orientation>
+      <Orientation>Mediation can bring what is underneath a disagreement to the surface. A disagreement that looks like it is about the schedule can turn out to be about transportation. Something that sounds like a communication problem can turn out to be about who makes decisions. Sometimes one issue stays one issue. Sometimes it opens into several, and sometimes several collapse into one thing underneath them all.</Orientation>
       <P>This is normal, and it is worth knowing before you sit down, because a parent who expects the topic to shift and wander is far less rattled when it does. Part of what mediation does is discover what the disagreement is actually about. An issue you walk in certain of can look different once the other parent's perspective is sitting next to yours, not because you were wrong, but because you were only ever holding one part of the picture.</P>
       <P>So the useful work now is to look ahead at what you think will come up, while holding it loosely enough that you can follow the conversation if it goes somewhere you did not expect.</P>
 
       <KeyTakeaways items={[
-        "Mediation rarely stays where it starts. Issues split apart and collapse together as the conversation moves.",
+        "Mediation often surfaces what is underneath a disagreement. Issues split apart and collapse together as the conversation moves.",
         "Expecting the conversation to move means you are far less rattled when it does.",
         "Look ahead at what you think will come up, but hold it loosely enough to follow the conversation.",
       ]} />
@@ -606,9 +609,9 @@ const COUNTDOWN_PHASES = [
         { key:"cd24_log_childcare",label:"Childcare confirmed" },
         { key:"cd24_log_transport",label:"Transportation confirmed" },
       ] },
-      { h:"When Emotions Rise", goal:"Mediation can bring up more than logistics, and a little preparation for that helps too.", more:[
-        "At some point the other parent may describe the same events very differently than you would. That can catch you off guard and bring up strong feelings, and that reaction is normal.",
-        "You do not have to respond right away. You can pause, ask for a moment, or request a break. Listening to the other parent's version is not the same as agreeing with it. And when a moment feels like too much, it helps to come back to what matters most to you, the priorities you have already worked out here.",
+      { h:"When Emotions Rise", goal:"Mediation can bring up more than logistics, and a little preparation for that helps.", more:[
+        "Strong feelings are common, and not only from disagreement. Hearing the other parent's account of events can land hard, and so can the reality that a familiar arrangement is about to change, especially for whoever has had the most say until now. Either parent can be caught off guard, and a single moment can derail a session if it is not expected.",
+        "Whatever sets it off, you do not have to respond in the moment. You can pause, take a breath, or ask for a break. Listening is not the same as agreeing, and returning to what matters most to you is what turns a reaction into a response.",
       ] },
       { h:"Give Yourself Permission to Stop", goal:"There's a point where more preparation stops helping. Trust the work and rest.", more:[
         "If you have done the work in this system, trust it. Spend the rest of the evening doing something that helps you arrive rested and clear-headed. You are not trying to predict every turn the conversation might take. You are giving yourself the best opportunity to respond thoughtfully when it does.",
@@ -650,19 +653,35 @@ function CountdownLearn({ session, onCheck }) {
 // ---------- Part IV — Your Brief ----------
 function buildBriefDraft(answers, quickNotes) {
   const g = (id) => (answers[id] || "").trim();
-  const sec = (title, body) => (body ? title + "\n" + body + "\n\n" : "");
   let out = "MEDIATION PREPARATION BRIEF\n\n";
-  out += sec("ISSUES I EXPECT TO DISCUSS", g("discussed_expected_issues"));
-  out += sec("WHAT MATTERS MOST TO ME", g("discussed_priority_issues"));
-  out += sec("WHAT I AM ACTUALLY TRYING TO PROTECT", g("priorities_protect"));
-  out += sec("THE PROBLEM UNDERNEATH", g("discussed_surface_vs_underneath") || g("positions_actual_problem"));
-  out += sec("WHERE I HAVE ROOM TO MOVE", g("priorities_room_to_move") || g("priorities_still_work"));
-  out += sec("WHAT I KNOW", g("questions_what_you_know"));
-  out += sec("WHAT I AM ASSUMING", g("questions_assumptions"));
-  const openQs = [g("questions_unknowns"), g("questions_useful_to_find")].filter(Boolean).join("\n");
-  out += sec("OPEN QUESTIONS TO RAISE", openQs);
+
+  // Lead with the single most important framing.
+  const priority = g("discussed_priority_issues");
+  if (priority) out += "WHAT MATTERS MOST TO ME\n" + priority + "\n\n";
+
+  // Anything flagged for discussion, surfaced to the top.
+  const flagged = [];
+  Object.entries(QUESTIONS).forEach(([sid, qs]) => {
+    qs.forEach(q => { if (answers[q.id + "__flag"] && (answers[q.id] || "").trim()) flagged.push(q); });
+  });
+  if (flagged.length) {
+    out += "FLAGGED FOR DISCUSSION\n";
+    flagged.forEach(q => { out += "- " + q.text + "\n  " + (answers[q.id] || "").trim() + "\n"; });
+    out += "\n";
+  }
+
+  // The full record of every answer, organized by section.
+  Object.entries(QUESTIONS).forEach(([sid, qs]) => {
+    const answered = qs.filter(q => (answers[q.id] || "").trim().length > 0);
+    if (!answered.length) return;
+    const label = (SECTIONS.find(s => s.id === sid)?.label || sid).toUpperCase();
+    out += label + "\n";
+    answered.forEach(q => { out += "- " + q.text + "\n  " + answers[q.id].trim() + "\n"; });
+    out += "\n";
+  });
+
   if (answers.brief_include_notes && (quickNotes || "").trim()) {
-    out += sec("MY NOTES", (quickNotes || "").trim());
+    out += "MY NOTES\n" + (quickNotes || "").trim() + "\n\n";
   }
   return out.trim();
 }
