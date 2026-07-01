@@ -273,11 +273,16 @@ function CheckItem({ ckey, label, why, checked, onCheck }) {
 }
 
 function ActionCard({ item, answers, onCheck }) {
+  const hasChecks = !!item.checks;
+  // Separation by color, matching PPPS: green for actionable checklists, blue for guidance.
+  const wrap = hasChecks
+    ? {background:"#F5F9F5",border:"1px solid #C8DFC8",borderRadius:9,padding:"14px 16px",marginBottom:12}
+    : {background:"#F0F4F8",border:"1px solid #D6E0EC",borderRadius:9,padding:"14px 16px",marginBottom:12};
   return (
-    <div style={{border:`1px solid ${RULE}`,borderRadius:9,padding:"14px 16px",marginBottom:10,background:"#fff"}}>
+    <div style={wrap}>
       <div style={{fontSize:14,fontWeight:600,color:NAVY,marginBottom:3}}>{item.h}</div>
       <div style={{fontSize:12.5,color:SLATE,lineHeight:1.6,fontStyle:"italic"}}>{item.goal}</div>
-      {item.checks && (
+      {hasChecks && (
         <div style={{marginTop:10}}>
           {item.checks.map(c => (
             <CheckItem key={c.key} ckey={c.key} label={c.label} why={c.why} checked={!!answers[c.key]} onCheck={onCheck} />
@@ -572,13 +577,13 @@ const COUNTDOWN_PHASES = [
       { h:"Confirm With Your Attorney", goal:"Confirm you're aligned on what the session covers and on your priorities.", more:[
         "Confirm you are aligned on what the session will cover and on your priorities going in. Raise anything still unresolved now, while there is time to think it through together. If your attorney will not be in the room with you, make sure you know how to reach them during the session if a question comes up.",
       ] },
-      { h:"Review Your Work", goal:"Make sure you can put your conclusions into words without strain.", more:[
+      { h:"Practice Explaining Your Position", goal:"Make sure you can put your conclusions into words without strain.", more:[
         "Read back through your work one more time. If any part of what you plan to discuss is difficult to explain clearly, take time to simplify it now. You are not looking for new conclusions. You are making sure the ones you reached still feel sound.",
       ] },
-      { h:"Review Financial Questions", goal:"Know the financial information likely to come up before it does.", more:[
+      { h:"Think Through Financial Questions", goal:"Know the financial information likely to come up before it does.", more:[
         "If financial issues may be discussed, make sure you have a general understanding of the information likely to come up. If you have an attorney, confirm that you understand any financial topics you expect to discuss. If you are representing yourself, identify any questions you would like clarified before mediation.",
       ] },
-      { h:"Review the Day Ahead", goal:"Decide in advance that pauses and surprises don't require an instant response.", more:[
+      { h:"Picture the Conversation", goal:"Decide in advance that pauses and surprises don't require an instant response.", more:[
         "Mediation may include pauses, disagreements, or unexpected turns. None of those require an immediate response. Remember that you can pause, ask questions, or request a break if you need one. If you have an attorney, make sure you have already discussed how the two of you will communicate during the session.",
       ] },
       { h:"Reconfirm the Logistics", goal:"Re-check the details so you carry fewer questions into tomorrow.", checks:[
@@ -742,7 +747,7 @@ function BriefSection({ session, onBrief, onCheck }) {
         value={value}
         onChange={e=>onBrief(e.target.value)}
         rows={22}
-        style={{width:"100%",border:`1px solid ${RULE}`,borderRadius:8,padding:"14px 16px",fontSize:13,color:NAVY,fontFamily:"'Courier New',monospace",lineHeight:1.7,resize:"vertical",background:"#fff",boxSizing:"border-box",outline:"none",whiteSpace:"pre-wrap"}}
+        style={{width:"100%",border:`1px solid ${RULE}`,borderRadius:8,padding:"16px 18px",fontSize:14,color:NAVY,fontFamily:"Georgia,'Times New Roman',serif",lineHeight:1.75,resize:"vertical",background:"#fff",boxSizing:"border-box",outline:"none",whiteSpace:"pre-wrap"}}
       />
       <div style={{display:"flex",gap:9,marginTop:12}}>
         <button onClick={()=>window.print()} style={{flex:1,padding:"11px",background:NAVY,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:600,cursor:"pointer",fontFamily:"Inter,sans-serif"}}>Print / Save as PDF</button>
