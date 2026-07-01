@@ -634,7 +634,7 @@ function CountdownLearn({ session, onCheck }) {
       </div>
 
       {COUNTDOWN_PHASES.map((phase, pi) => (
-        <div key={pi} style={{marginTop:pi>0?44:8,marginBottom:8,paddingTop:pi>0?30:0,borderTop:pi>0?`2px solid ${RULE}`:"none"}}>
+        <div key={pi} style={{marginTop:pi>0?64:8,marginBottom:8,paddingTop:pi>0?40:0,borderTop:pi>0?`2px solid ${RULE}`:"none"}}>
           <div style={{fontSize:16,fontWeight:700,color:NAVY,marginBottom:5}}>{phase.label}</div>
           <P>{phase.lead}</P>
           <div style={{marginTop:12}}>
