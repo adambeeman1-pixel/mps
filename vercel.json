@@ -1,12 +1,6 @@
 {
-  "rewrites": [{ "source": "/((?!.*\\.).*)", "destination": "/" }],
-  "headers": [
-    {
-      "source": "/(.*)\\.pdf",
-      "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
-        { "key": "Content-Disposition", "value": "attachment" }
-      ]
-    }
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/index.html" }
   ]
 }
