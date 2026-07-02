@@ -1,0 +1,12 @@
+{
+  "rewrites": [{ "source": "/((?!.*\\.pdf$).*)", "destination": "/" }],
+  "headers": [
+    {
+      "source": "/(.*)\\.pdf",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Content-Disposition", "value": "attachment" }
+      ]
+    }
+  ]
+}
