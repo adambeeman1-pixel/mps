@@ -2,15 +2,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 
 const SCHEMA_VERSION = "1.0";
 const PRODUCT_VERSION = "mps_v1";
-const STORAGE_KEY = "mps_session_v1";
 
-// --- Supabase connection (shared project with PPPS) ---
-const SUPABASE_URL = "https://kyhsljmjibzlgomgmmkn.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_u0qrF7ZGzWc2e6WMNzPhyw_VOTUPdMx";
-const supabase =
-  typeof window !== "undefined" && window.supabase
-    ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-    : null;
+import { supabase } from './AccessGate';
 
 const NAVY = "#1B2B4B";
 const AMBER = "#C9974A";
@@ -40,9 +33,7 @@ function blankSession(userId) {
   };
 }
 
-function initSession() {
-  return blankSession();
-}
+
 
 const SECTIONS = [
   { id: "welcome",       label: "Getting Started",             short: "How It Works",         layer: "start" },
@@ -780,91 +771,13 @@ function CompletionPage({ onViewBrief }) {
   );
 }
 
-function AuthScreen() {
-  const [mode, setMode] = useState("signin");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [msg, setMsg] = useState("");
-  const [signupSuccess, setSignupSuccess] = useState(false);
-  const submit = async () => {
-    setMsg("");
-    if (!email || !password) { setMsg("Enter your email and password."); return; }
-    if (!supabase) { setMsg("Connection unavailable. Refresh and try again."); return; }
-    setBusy(true);
-    try {
-      if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({ email, password });
-        if (error) { setMsg(error.message); }
-        else { setSignupSuccess(true); }
-      } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) { setMsg(error.message); }
-      }
-    } catch (e) {
-      setMsg("Something went wrong. Try again.");
-    }
-    setBusy(false);
-  };
-  if (signupSuccess) {
-    return (
-      <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:"#F8F6F1",padding:"24px",fontFamily:"Inter,sans-serif"}}>
-        <div style={{width:"100%",maxWidth:380,background:"#fff",border:`1px solid ${RULE}`,borderRadius:14,padding:"36px 28px",boxShadow:"0 4px 24px rgba(27,43,75,0.08)",textAlign:"center"}}>
-          <div style={{fontFamily:"Georgia,serif",fontSize:22,color:NAVY,marginBottom:14}}>Check Your Email</div>
-          <div style={{fontSize:14,color:SLATE,lineHeight:1.5,marginBottom:8}}>
-            We sent a confirmation link to <strong style={{color:NAVY}}>{email}</strong>.
-          </div>
-          <div style={{fontSize:14,color:SLATE,lineHeight:1.5,marginBottom:24}}>
-            Open it to confirm your account, then return here to sign in. The link may take a minute to arrive. Check your spam folder if you do not see it.
-          </div>
-          <button onClick={()=>{setSignupSuccess(false);setMode("signin");setMsg("");setPassword("");}}
-            style={{width:"100%",padding:"12px",background:NAVY,color:"#fff",border:"none",borderRadius:8,fontSize:14,fontWeight:600,cursor:"pointer",fontFamily:"Inter,sans-serif"}}>
-            Back to Sign In
-          </button>
-        </div>
-      </div>
-    );
-  }
-  return (
-    <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:"#F8F6F1",padding:"24px",fontFamily:"Inter,sans-serif"}}>
-      <div style={{width:"100%",maxWidth:380,background:"#fff",border:`1px solid ${RULE}`,borderRadius:14,padding:"32px 28px",boxShadow:"0 4px 24px rgba(27,43,75,0.08)"}}>
-        <div style={{fontSize:9,fontWeight:700,letterSpacing:"0.12em",color:AMBER,textAlign:"center",marginBottom:4}}>POLARIS PARENTING PROJECT</div>
-        <div style={{fontFamily:"Georgia,serif",fontSize:21,color:NAVY,marginBottom:6,textAlign:"center"}}>Mediation Preparation System</div>
-        <div style={{fontSize:13,color:SLATE,textAlign:"center",marginBottom:24}}>
-          {mode === "signup" ? "Create your account using the same email address you used at checkout." : "Sign in to continue your work."}
-        </div>
-        <label style={{display:"block",fontSize:11,fontWeight:700,letterSpacing:"0.08em",color:"#444",marginBottom:5}}>EMAIL</label>
-        <input type="email" value={email} onChange={e=>setEmail(e.target.value)} autoComplete="email"
-          style={{width:"100%",border:`1px solid ${RULE}`,borderRadius:8,padding:"10px 12px",fontSize:14,color:NAVY,marginBottom:16,outline:"none",fontFamily:"Inter,sans-serif"}} />
-        <label style={{display:"block",fontSize:11,fontWeight:700,letterSpacing:"0.08em",color:"#444",marginBottom:5}}>PASSWORD</label>
-        <input type="password" value={password} onChange={e=>setPassword(e.target.value)} autoComplete={mode==="signup"?"new-password":"current-password"}
-          onKeyDown={e=>{ if(e.key==="Enter") submit(); }}
-          style={{width:"100%",border:`1px solid ${RULE}`,borderRadius:8,padding:"10px 12px",fontSize:14,color:NAVY,marginBottom:8,outline:"none",fontFamily:"Inter,sans-serif"}} />
-        {msg && <div style={{fontSize:12,color:mode==="signin"?"#B23A3A":"#2C7A4B",margin:"8px 0 4px"}}>{msg}</div>}
-        <button onClick={submit} disabled={busy}
-          style={{width:"100%",padding:"12px",background:NAVY,color:"#fff",border:"none",borderRadius:8,fontSize:14,fontWeight:600,cursor:busy?"default":"pointer",marginTop:12,fontFamily:"Inter,sans-serif",opacity:busy?0.7:1}}>
-          {busy ? "Please wait..." : mode === "signup" ? "Create Account" : "Sign In"}
-        </button>
-        {mode === "signup" && <div style={{fontSize:11,color:SLATE,textAlign:"center",marginTop:10,lineHeight:1.4}}>
-          You will receive an email to confirm your account before you can sign in.
-        </div>}
-        <div style={{textAlign:"center",marginTop:18,fontSize:13,color:SLATE}}>
-          {mode === "signup" ? "Already have an account? " : "Need an account? "}
-          <span onClick={()=>{setMode(mode==="signup"?"signin":"signup");setMsg("");}}
-            style={{color:AMBER,fontWeight:600,cursor:"pointer"}}>
-            {mode === "signup" ? "Sign in" : "Create one"}
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function MPS() {
-  const [authUser, setAuthUser] = useState(null);
-  const [authReady, setAuthReady] = useState(false);
-  const [isActive, setIsActive] = useState(null); // null=unknown, false=locked, true=paid
-  const [session, setSession] = useState(() => initSession());
+export default function MPS({verifiedUser}) {
+  const authUser = verifiedUser;
+  const [sessionReady, setSessionReady] = useState(false);
+  const [loadError, setLoadError] = useState(false);
+  const mounted = useRef(true);
+  const saveSequence = useRef(0);
+  const [session, setSession] = useState(() => blankSession(verifiedUser.id));
   const [activeSection, setActiveSection] = useState(session.last_active_section || "welcome");
   const [activeTab, setActiveTab] = useState("learn");
   const [showCompletion, setShowCompletion] = useState(false);
@@ -872,6 +785,8 @@ export default function MPS() {
   const [railCollapsed, setRailCollapsed] = useState(typeof window !== 'undefined' && window.innerWidth < 768);
   const contentRef = useRef(null);
   const saveTimer = useRef(null);
+  const saveQueue = useRef(Promise.resolve());
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false; clearTimeout(saveTimer.current); }; }, []);
 
   const persist = useCallback(async (s) => {
     if (!supabase || !s.user_id) return;
@@ -889,43 +804,22 @@ export default function MPS() {
       answers: s.answers,
       updated_at: new Date().toISOString(),
     };
+    const sequence = ++saveSequence.current;
+    if (mounted.current) setSaveIndicator("Saving…");
+    const operation = saveQueue.current.then(async () => {
+      const {error} = await supabase.from("sessions").upsert(row, {onConflict:"session_id"});
+      if (error) throw error;
+    });
+    saveQueue.current = operation.catch(() => {});
     try {
-      await supabase.from("sessions").upsert(row, { onConflict: "session_id" });
-    } catch (e) {}
+      await operation;
+      if (mounted.current && sequence === saveSequence.current) setSaveIndicator("Saved");
+      return true;
+    } catch (e) {
+      if (mounted.current && sequence === saveSequence.current) setSaveIndicator("Not saved — keep this page open and try editing again when connected.");
+      return false;
+    }
   }, []);
-
-  // Watch auth state: who is logged in
-  useEffect(() => {
-    if (!supabase) { setAuthReady(true); return; }
-    supabase.auth.getSession().then(({ data }) => {
-      setAuthUser(data?.session?.user || null);
-      setAuthReady(true);
-    });
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => {
-      setAuthUser(s?.user || null);
-    });
-    return () => { sub?.subscription?.unsubscribe?.(); };
-  }, []);
-
-  // When logged in, check whether this account is activated for MPS (paid)
-  useEffect(() => {
-    if (!supabase || !authUser) { setIsActive(null); return; }
-    let cancelled = false;
-    (async () => {
-      try {
-        const { data } = await supabase
-          .from("profiles")
-          .select("mps_active")
-          .eq("id", authUser.id)
-          .single();
-        if (cancelled) return;
-        setIsActive(data ? !!data.mps_active : false);
-      } catch (e) {
-        if (!cancelled) setIsActive(false);
-      }
-    })();
-    return () => { cancelled = true; };
-  }, [authUser]);
 
   // When a user logs in, load their saved MPS session (or start fresh).
   // Scoped to product_id = "mps" so PPPS rows in the shared table are ignored.
@@ -934,7 +828,7 @@ export default function MPS() {
     let cancelled = false;
     (async () => {
       try {
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from("sessions")
           .select("*")
           .eq("user_id", authUser.id)
@@ -942,6 +836,7 @@ export default function MPS() {
           .order("updated_at", { ascending: false })
           .limit(1);
         if (cancelled) return;
+        if (error) throw error;
         if (data && data.length > 0) {
           const row = data[0];
           const loaded = {
@@ -956,21 +851,19 @@ export default function MPS() {
         } else {
           const fresh = blankSession(authUser.id);
           setSession(fresh);
-          await persist(fresh);
+
         }
-      } catch (e) {}
+        setSessionReady(true);
+      } catch (e) { if (!cancelled) setLoadError(true); }
     })();
     return () => { cancelled = true; };
   }, [authUser, persist]);
 
   const autosave = useCallback((s) => {
-    setSaveIndicator("Saving...");
+    ++saveSequence.current;
+    setSaveIndicator("Unsaved changes…");
     clearTimeout(saveTimer.current);
-    saveTimer.current = setTimeout(() => {
-      persist(s);
-      setSaveIndicator("Saved");
-      setTimeout(() => setSaveIndicator(""), 2500);
-    }, 700);
+    saveTimer.current = setTimeout(() => persist(s), 700);
   }, [persist]);
 
   const handleAnswer = useCallback((qid, val) => {
@@ -1028,13 +921,14 @@ export default function MPS() {
   }, []);
 
   useEffect(() => {
+    if (!sessionReady) return;
     setSession(prev => {
       const next = {...prev, last_active_section: activeSection, last_active_tab: activeTab};
-      persist(next);
+      autosave(next);
       return next;
     });
     if (contentRef.current) contentRef.current.scrollTop = 0;
-  }, [activeSection, activeTab]);
+  }, [activeSection, activeTab, sessionReady, autosave]);
 
   const getOverall = () => {
     const qs = Object.values(QUESTIONS).flat();
@@ -1082,45 +976,8 @@ export default function MPS() {
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
-  if (supabase && !authReady) {
-    return (
-      <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:"#F8F6F1",fontFamily:"Inter,sans-serif",color:SLATE,fontSize:14}}>
-        Loading...
-      </div>
-    );
-  }
-  if (supabase && !authUser) {
-    return <AuthScreen />;
-  }
-  if (supabase && authUser && isActive === null) {
-    return (
-      <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:"#F8F6F1",fontFamily:"Inter,sans-serif",color:SLATE,fontSize:14}}>
-        Loading...
-      </div>
-    );
-  }
-  if (supabase && authUser && isActive === false) {
-    return (
-      <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:"#F8F6F1",padding:"24px",fontFamily:"Inter,sans-serif"}}>
-        <div style={{width:"100%",maxWidth:420,background:"#fff",border:`1px solid ${RULE}`,borderRadius:14,padding:"36px 30px",boxShadow:"0 4px 24px rgba(27,43,75,0.08)",textAlign:"center"}}>
-          <div style={{fontFamily:"Georgia,serif",fontSize:22,color:NAVY,marginBottom:14}}>Access Is Being Activated</div>
-          <div style={{fontSize:14,color:SLATE,lineHeight:1.55,marginBottom:14}}>
-            Thank you for your purchase. Your account is being activated, which usually takes a few hours.
-          </div>
-          <div style={{fontSize:14,color:SLATE,lineHeight:1.55,marginBottom:24}}>
-            You will receive an email as soon as your access is ready. You can close this page and return anytime by signing in.
-          </div>
-          <div style={{fontSize:12,color:SLATE,marginBottom:18,paddingTop:18,borderTop:`1px solid ${RULE}`}}>
-            If you have not completed your purchase yet, your access will activate once payment is confirmed.
-          </div>
-          <button onClick={async()=>{await supabase.auth.signOut();}}
-            style={{fontSize:13,color:SLATE,background:"none",border:`1px solid ${RULE}`,borderRadius:8,padding:"9px 18px",cursor:"pointer",fontFamily:"Inter,sans-serif"}}>
-            Sign Out
-          </button>
-        </div>
-      </div>
-    );
-  }
+  if (loadError) return <div role="alert" style={{padding:30}}>Unable to load saved work. Reload to retry. Editing is paused to protect your saved answers.</div>;
+  if (!sessionReady) return <div style={{padding:30}}>Loading your saved work…</div>;
 
   return (
     <div style={{display:"flex",height:"100vh",fontFamily:"Inter,sans-serif",background:"#F8F6F1",overflow:"hidden",position:"relative"}}>
@@ -1137,7 +994,7 @@ export default function MPS() {
             </div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:isMobile?5:8,flexShrink:0}}>
-            {saveIndicator&&<div style={{fontSize:11,color:"#bbb"}}>{saveIndicator}</div>}
+            {saveIndicator&&<div role="status" style={{fontSize:12,color:saveIndicator.startsWith("Not saved")?"#A32323":"#4A5568",fontWeight:600,maxWidth:360}}>{saveIndicator}</div>}
             {supabase&&authUser&&<button onClick={async()=>{await supabase.auth.signOut();}} style={{fontSize:11,color:SLATE,background:"none",border:`1px solid ${RULE}`,borderRadius:6,padding:"4px 10px",cursor:"pointer",fontFamily:"Inter,sans-serif"}}>Sign out</button>}
             <button
               onClick={()=>setRailCollapsed(!railCollapsed)}
